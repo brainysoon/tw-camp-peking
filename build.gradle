@@ -27,23 +27,17 @@ repositories {
     mavenCentral()
 }
 
-flyway {
-    driver = 'com.mysql.jdbc.Driver'
-    url = 'jdbc:mysql://stage.icusin.com:3306/peking'
-    user = 'peking'
-    password = 'peking'
-    schemas = ['peking']
-    table = 'schema_history'
-    baselineOnMigrate = true
-}
-
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('io.springfox:springfox-swagger2:2.8.0')
+    compile('io.springfox:springfox-swagger-ui:2.8.0')
+    compile('io.springfox:springfox-swagger2:2.8.0')
+    compile('io.springfox:springfox-swagger-ui:2.8.0')
     compile('org.flywaydb:flyway-core')
-    runtime('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok')
+    runtime('com.h2database:h2')
+    runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
