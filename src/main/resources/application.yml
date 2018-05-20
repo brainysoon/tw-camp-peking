@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8777
 spring:
   datasource:
     url: jdbc:mysql://stage.icusin.com:3306/peking
