@@ -17,6 +17,7 @@ public class OrderInfo {
     private Integer id;
 
     private Integer productId;
+    private Integer orderId;
     private Integer purchaseCount;
     private Date modifiedTime;
     private Date createTime;
