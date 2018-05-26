@@ -9,4 +9,5 @@ public interface UriConstants {
     String ID = "/{id}";
 
     String ORDERS = "orders";
+    String LOGISTICS_RECORDS = "logisticsRecords";
 }
