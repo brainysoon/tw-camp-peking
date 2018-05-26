@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,8 +16,12 @@ public class Order {
     private Integer id;
 
     private Integer userId;
-    private Double total;
+    private Double totalPrice;
     private Date modifiedTime;
     private Date createTime;
     private Byte status;
+
+    @OneToMany
+    @JoinColumn(name = "orderId")
+    private List<OrderInfo> purchaseItemList;
 }
