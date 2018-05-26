@@ -8,4 +8,10 @@ import java.util.List;
 public interface OrderService {
 
     Order create(List<OrderInfo> orderInfoList) throws Exception;
+
+    Order purchase(Integer id) throws Exception;
+
+    Order withdrawn(Integer id) throws Exception;
+
+    Order findById(Integer id);
 }
