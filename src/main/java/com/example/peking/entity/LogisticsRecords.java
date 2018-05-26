@@ -10,15 +10,16 @@ import java.util.Date;
 
 @Entity
 @Data
-public class ProductLock {
+public class LogisticsRecords {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer productId;
-    private Integer count;
+    private String deliveryMan;
+    private Date outboundTime;
+    private Date signedTime;
     private Date modifiedTime;
     private Date createTime;
-    private Byte status;
+    private Byte logisticsStatus;
 }
