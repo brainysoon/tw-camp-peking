@@ -44,3 +44,13 @@ create table LogisticsRecords
 	constraint order_info_id_uindex unique (id)
 )engine=InnoDB DEFAULT CHARSET = utf8;
 
+create table ProductLock
+(
+	id int unsigned auto_increment primary key,
+	productId int unsigned not null,
+	lock int unsigned not null,
+	modifiedTime datetime not null,
+	createTime datetime not null,
+	status tinyint unsigned not null,
+	constraint Product_lock_id_uindex unique (id)
+)engine=InnoDB DEFAULT CHARSET = utf8;
