@@ -1,2 +1,4 @@
-INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 0, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
-INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('peking', 'nodejs', 20, 0, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
+INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
+INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
+INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
+INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('peking', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
