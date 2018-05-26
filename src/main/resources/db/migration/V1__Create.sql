@@ -14,7 +14,7 @@ create table `Order`
 (
 	id int unsigned auto_increment primary key,
 	userId int unsigned not null,
-``	totalPrice double not null,
+	totalPrice double not null,
 	modifiedTime datetime not null,
 	createTime datetime not null,
 	status tinyint unsigned not null,
