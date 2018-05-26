@@ -1,4 +1,4 @@
-create table product(
+create table Product(
 	id int unsigned auto_increment primary key,
 	name varchar(64) not null,
 	description varchar(264) not null,
@@ -10,7 +10,7 @@ create table product(
 	constraint product_id_uindex unique (id)
 )engine=InnoDB DEFAULT CHARSET = utf8;
 
-create table `order`
+create table `Order`
 (
 	id int unsigned auto_increment primary key,
 	userId int unsigned not null,
@@ -21,7 +21,7 @@ create table `order`
 	constraint order_id_uindex unique (id)
 )engine=InnoDB DEFAULT CHARSET = utf8;
 
-create table order_info
+create table OrderInfo
 (
 	id int unsigned auto_increment primary key,
 	productId int unsigned not null,
@@ -32,7 +32,7 @@ create table order_info
 	constraint order_info_id_uindex unique (id)
 )engine=InnoDB DEFAULT CHARSET = utf8;
 
-create table logistics_records
+create table LogisticsRecords
 (
 	id int unsigned auto_increment primary key,
 	deliveryMan varchar(16) not null,
