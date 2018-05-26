@@ -19,4 +19,6 @@ public interface ProductService {
     List<Product> findBy(Product query);
 
     Product update(Product product);
+
+    Product inventories(Integer id, Integer count);
 }

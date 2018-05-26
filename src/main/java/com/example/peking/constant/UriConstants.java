@@ -11,4 +11,6 @@ public interface UriConstants {
     String ORDERS = "/orders";
     String LOGISTICS_RECORDS = "/logisticsRecords";
     String ORDER_ID = "/{orderId}";
+
+    String INVENTORIES = "/inventories";
 }

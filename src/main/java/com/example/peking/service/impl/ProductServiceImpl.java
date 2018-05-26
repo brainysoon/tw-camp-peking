@@ -73,4 +73,14 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.save(product);
     }
+
+    @Override
+    public Product inventories(Integer id, Integer count) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) return null;
+
+        product.setCount(count);
+        product.setModifiedTime(new Date());
+        return productRepository.save(product);
+    }
 }
