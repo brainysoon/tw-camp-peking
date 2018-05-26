@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         order.setModifiedTime(currentTime);
         order.setStatus(StatusConstants.ACTIVE);
         order.setTotalPrice(total);
-        order.setUserId((int) (Math.random() * 1000));
+        order.setUserId(1);
         order = orderRepository.save(order);
 
         for (OrderInfo orderInfo : orderInfoList) {
@@ -128,5 +128,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Integer id) {
         return orderRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Order> findByUserId(Integer userId) {
+        return orderRepository.findByUserId(userId);
     }
 }

@@ -68,4 +68,15 @@ public class OrderController {
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
+
+    @GetMapping
+    HttpEntity<List<Order>> findByUserId(@RequestParam Integer userId) {
+
+        List<Order> orders = orderService.findByUserId(userId);
+        if (orders.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
 }

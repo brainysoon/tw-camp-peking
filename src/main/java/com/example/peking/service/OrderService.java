@@ -14,4 +14,6 @@ public interface OrderService {
     Order withdrawn(Integer id) throws Exception;
 
     Order findById(Integer id);
+
+    List<Order> findByUserId(Integer userId);
 }
