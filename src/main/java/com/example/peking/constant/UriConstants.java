@@ -8,6 +8,7 @@ public interface UriConstants {
     String PAGE_PAGESIZE = "/{page}/{pagesize}";
     String ID = "/{id}";
 
-    String ORDERS = "orders";
-    String LOGISTICS_RECORDS = "logisticsRecords";
+    String ORDERS = "/orders";
+    String LOGISTICS_RECORDS = "/logisticsRecords";
+    String ORDER_ID = "/{orderId}";
 }

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(UriConstants.LOGISTICS_RECORDS)
 public class LogisticsRecordsController {
+
+    private static final String SHIPPING = "shipping";
+    private static final String SIGNED = "signed";
 
     @Autowired
     private LogisticsRecordsService logisticsRecordsService;
@@ -28,5 +28,28 @@ public class LogisticsRecordsController {
         }
 
         return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
+    }
+
+    @PutMapping(UriConstants.ID + UriConstants.ORDERS + UriConstants.ORDER_ID)
+    HttpEntity<LogisticsRecords> update(@PathVariable Integer id, @RequestParam String logisticsStatus) {
+
+        if (SHIPPING.equals(logisticsStatus)) {
+
+            LogisticsRecords logisticsRecords = logisticsRecordsService.shipping(id);
+            if (logisticsRecords == null) {
+                return ResponseEntity.noContent().build();
+            }
+            return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
+        } else if (SIGNED.equals(logisticsStatus)) {
+
+            LogisticsRecords logisticsRecords = logisticsRecordsService.signed(id);
+            if (logisticsRecords == null) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
