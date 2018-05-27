@@ -2,3 +2,8 @@ INSERT INTO peking.Product (name, description, price, count, modifiedTime, creat
 INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
 INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('node', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
 INSERT INTO peking.Product (name, description, price, count, modifiedTime, createTime, status) VALUES ('peking', 'nodejs', 20, 10, '2018-05-24 18:58:40', '2018-05-24 18:58:40', 1);
+INSERT INTO peking.`Order` (id, userId, totalPrice, modifiedTime, createTime, status) VALUES (1, 1, 0, '2018-05-26 21:38:39', '2018-05-26 21:29:29', 2);
+INSERT INTO peking.OrderInfo (id, productId, orderId, purchaseCount, modifiedTime, createTime, status) VALUES (1, 1, 1, 3, '2018-05-26 21:29:29', '2018-05-26 21:29:29', 2);
+INSERT INTO peking.OrderInfo (id, productId, orderId, purchaseCount, modifiedTime, createTime, status) VALUES (2, 2, 1, 1, '2018-05-26 21:29:29', '2018-05-26 21:29:29', 2);
+INSERT INTO peking.OrderInfo (id, productId, orderId, purchaseCount, modifiedTime, createTime, status) VALUES (3, 3, 1, 5, '2018-05-26 21:29:29', '2018-05-26 21:29:29', 2);
+INSERT INTO peking.LogisticsRecords (id, deliveryMan, outboundTime, signedTime, modifiedTime, createTime, logisticsStatus) VALUES (1, null, '2018-05-26 21:57:40', '2018-05-26 21:58:21', '2018-05-26 21:58:21', '2018-05-26 21:38:39', 3);
