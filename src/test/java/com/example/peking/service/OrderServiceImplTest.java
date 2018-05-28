@@ -72,7 +72,6 @@ public class OrderServiceImplTest {
         product.setPrice(10.0D);
         given(productRepository.findById(anyInt())).willReturn(Optional.of(product));
 
-        given(productRepository.saveAll(any())).willReturn(null);
         given(orderInfoRepository.saveAll(any())).willReturn(orderInfoList);
 
         savedOrder = orderService.create(orderInfoList);
@@ -80,7 +79,6 @@ public class OrderServiceImplTest {
         assertThat(savedOrder.getId()).isEqualTo(2);
         verify(orderRepository, times(1)).save(any());
         verify(productRepository, times(3)).findById(anyInt());
-        verify(productRepository).saveAll(any());
         verify(orderInfoRepository).saveAll(any());
     }
 

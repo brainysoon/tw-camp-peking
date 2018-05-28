@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order create(List<OrderInfo> orderInfoList) throws Exception {
         Date currentTime = new Date();
-        List<Product> products = new ArrayList<>();
         Double total = 0.0D;
 
         Order order = new Order();
@@ -50,23 +48,22 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderInfo orderInfo : orderInfoList) {
             Product product = productRepository.findById(orderInfo.getProductId()).orElseThrow(() -> new Exception("no such product"));
-            if (product.getCount() < orderInfo.getPurchaseCount()) {
+
+            List<OrderInfo> lockedOrderInfoList = orderInfoRepository.findByProductIdAndStatus(orderInfo.getProductId(),
+                    StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
+            Integer lockedCount = lockedOrderInfoList.stream().mapToInt(OrderInfo::getPurchaseCount).sum();
+            if (product.getCount() < orderInfo.getPurchaseCount() + lockedCount) {
                 throw new Exception("product is not enough");
             }
-            product.setCount(product.getCount() - orderInfo.getPurchaseCount());
-            product.setModifiedTime(currentTime);
-            products.add(product);
 
             orderInfo.setModifiedTime(currentTime);
             orderInfo.setCreateTime(currentTime);
             orderInfo.setOrderId(order.getId());
-
             orderInfo.setStatus(StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
 
             total += product.getPrice() * orderInfo.getPurchaseCount();
         }
 
-        productRepository.saveAll(products);
         orderInfoRepository.saveAll(orderInfoList);
         return order;
     }

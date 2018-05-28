@@ -1,5 +1,6 @@
 package com.example.peking.repository;
 
+import com.example.peking.constant.StatusConstants;
 import com.example.peking.entity.OrderInfo;
 import org.flywaydb.core.Flyway;
 import org.junit.Before;
@@ -38,5 +39,12 @@ public class OrderInfoRepositoryTest {
         List<OrderInfo> orderInfoList = orderInfoRepository.findByOrderId(1);
 
         assertThat(orderInfoList.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void should_return_all_product_order_info_and_match_the_given_status() {
+        List<OrderInfo> orderInfoList = orderInfoRepository.findByProductIdAndStatus(1, StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
+
+        assertThat(orderInfoList.size()).isEqualTo(1);
     }
 }

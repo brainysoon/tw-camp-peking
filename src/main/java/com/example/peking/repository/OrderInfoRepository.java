@@ -10,4 +10,6 @@ import java.util.List;
 public interface OrderInfoRepository extends JpaRepository<OrderInfo, Integer> {
 
     List<OrderInfo> findByOrderId(Integer orderId);
+
+    List<OrderInfo> findByProductIdAndStatus(Integer productId, Byte status);
 }
