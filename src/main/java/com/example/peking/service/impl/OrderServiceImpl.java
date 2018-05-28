@@ -84,6 +84,7 @@ public class OrderServiceImpl implements OrderService {
         order.setModifiedTime(currentTime);
 
         LogisticsRecords logisticsRecords = new LogisticsRecords();
+        logisticsRecords.setOrderId(id);
         logisticsRecords.setCreateTime(currentTime);
         logisticsRecords.setLogisticsStatus(StatusConstants.ACTIVE);
         logisticsRecords.setModifiedTime(currentTime);
