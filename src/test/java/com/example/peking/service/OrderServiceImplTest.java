@@ -77,7 +77,7 @@ public class OrderServiceImplTest {
         savedOrder = orderService.create(orderInfoList);
 
         assertThat(savedOrder.getId()).isEqualTo(2);
-        verify(orderRepository, times(1)).save(any());
+        verify(orderRepository, times(2)).save(any());
         verify(productRepository, times(3)).findById(anyInt());
         verify(orderInfoRepository).saveAll(any());
     }
@@ -186,9 +186,6 @@ public class OrderServiceImplTest {
         orderInfoList.add(orderInfo2);
 
         given(orderInfoRepository.findByOrderId(order.getId())).willReturn(orderInfoList);
-        Product product = new Product();
-        product.setCount(10);
-        given(productRepository.findById(anyInt())).willReturn(Optional.of(product));
         given(orderInfoRepository.save(any())).willReturn(null);
         given(orderRepository.save(any())).willReturn(order);
 
@@ -196,7 +193,6 @@ public class OrderServiceImplTest {
 
         verify(orderRepository).findById(anyInt());
         verify(orderInfoRepository).findByOrderId(anyInt());
-        verify(productRepository, times(3)).findById(anyInt());
         verify(orderRepository).save(any());
         verify(orderInfoRepository, times(3)).save(any());
     }

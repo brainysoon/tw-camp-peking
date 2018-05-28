@@ -35,43 +35,56 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order create(List<OrderInfo> orderInfoList) throws Exception {
-        Date currentTime = new Date();
-        Double total = 0.0D;
-
-        Order order = new Order();
-        order.setCreateTime(currentTime);
-        order.setModifiedTime(currentTime);
-        order.setStatus(StatusConstants.ACTIVE);
-        order.setTotalPrice(total);
-        order.setUserId(1);
+        Order order = generateOrder();
         order = orderRepository.save(order);
 
-        for (OrderInfo orderInfo : orderInfoList) {
-            Product product = productRepository.findById(orderInfo.getProductId()).orElseThrow(() -> new Exception("no such product"));
+        Double totalPrice = persistenceOrderInfos(orderInfoList, order);
+        order.setTotalPrice(totalPrice);
+        return orderRepository.save(order);
+    }
 
-            List<OrderInfo> lockedOrderInfoList = orderInfoRepository.findByProductIdAndStatus(orderInfo.getProductId(),
-                    StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
-            Integer lockedCount = lockedOrderInfoList.stream().mapToInt(OrderInfo::getPurchaseCount).sum();
-            if (product.getCount() < orderInfo.getPurchaseCount() + lockedCount) {
-                throw new Exception("product is not enough");
+    private Double persistenceOrderInfos(List<OrderInfo> orderInfoList, Order order) throws Exception {
+        Double totalPrice = 0.0D;
+        for (OrderInfo orderInfo : orderInfoList) {
+            Product product = productRepository.findById(orderInfo.getProductId())
+                    .orElseThrow(() -> new Exception("no such product"));
+
+            if (checkLockedCount(orderInfo, product)) {
+                throw new Exception("product count not enough");
             }
 
-            orderInfo.setModifiedTime(currentTime);
-            orderInfo.setCreateTime(currentTime);
+            orderInfo.setCreateTime(new Date());
+            orderInfo.setModifiedTime(orderInfo.getCreateTime());
             orderInfo.setOrderId(order.getId());
             orderInfo.setStatus(StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
 
-            total += product.getPrice() * orderInfo.getPurchaseCount();
+            totalPrice += product.getPrice() * orderInfo.getPurchaseCount();
         }
 
         orderInfoRepository.saveAll(orderInfoList);
+        return totalPrice;
+    }
+
+    private boolean checkLockedCount(OrderInfo orderInfo, Product product) {
+        List<OrderInfo> lockedOrderInfoList = orderInfoRepository.findByProductIdAndStatus(orderInfo.getProductId(),
+                StatusConstants.ORDER_INFO_PRODUCT_COUNT_LOCK);
+        Integer lockedCount = lockedOrderInfoList.stream().mapToInt(OrderInfo::getPurchaseCount).sum();
+        return product.getCount() < orderInfo.getPurchaseCount() + lockedCount;
+    }
+
+    private Order generateOrder() {
+        Order order = new Order();
+        order.setCreateTime(new Date());
+        order.setModifiedTime(order.getCreateTime());
+        order.setStatus(StatusConstants.ACTIVE);
+        order.setTotalPrice(0.0D);
+        order.setUserId(1);
         return order;
     }
 
     @Override
     @Transactional
     public Order purchase(Integer id) throws Exception {
-
         Order order = orderRepository.findById(id).orElse(null);
         if (order == null) return null;
 
@@ -96,7 +109,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order withdrawn(Integer id) throws Exception {
-
         Order order = orderRepository.findById(id).orElse(null);
         if (order == null) return null;
 
@@ -107,19 +119,17 @@ public class OrderServiceImpl implements OrderService {
         Date currentTime = new Date();
         order.setStatus(StatusConstants.ORDER_WITHDRAWN);
         order.setModifiedTime(currentTime);
+        unlockOrderInfoCount(order);
+        return orderRepository.save(order);
+    }
 
+    private void unlockOrderInfoCount(Order order) {
         List<OrderInfo> orderInfos = orderInfoRepository.findByOrderId(order.getId());
         for (OrderInfo orderInfo : orderInfos) {
-            Product product = productRepository.findById(orderInfo.getProductId()).orElseThrow(() -> new Exception("no such product"));
-            product.setModifiedTime(currentTime);
-            product.setCount(product.getCount() + orderInfo.getProductId());
-
-            orderInfo.setModifiedTime(currentTime);
+            orderInfo.setModifiedTime(new Date());
             orderInfo.setStatus(StatusConstants.ORDER_INFO_PRODUCT_COUNT_UNLOCK);
             orderInfoRepository.save(orderInfo);
         }
-
-        return orderRepository.save(order);
     }
 
     @Override
