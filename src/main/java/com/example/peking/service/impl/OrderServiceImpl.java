@@ -118,7 +118,6 @@ public class OrderServiceImpl implements OrderService {
 
             orderInfo.setModifiedTime(currentTime);
             orderInfo.setStatus(StatusConstants.ORDER_INFO_PRODUCT_COUNT_UNLOCK);
-            orderRepository.save(order);
             orderInfoRepository.save(orderInfo);
         }
 
