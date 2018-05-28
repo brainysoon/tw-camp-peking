@@ -31,7 +31,7 @@ public class LogisticsRecordsController {
     }
 
     @PutMapping(UriConstants.ID + UriConstants.ORDERS + UriConstants.ORDER_ID)
-    HttpEntity<LogisticsRecords> update(@PathVariable Integer id, @RequestParam String logisticsStatus) {
+    HttpEntity<LogisticsRecords> update(@PathVariable Integer id, @RequestParam String logisticsStatus) throws Exception {
 
         if (SHIPPING.equals(logisticsStatus)) {
 

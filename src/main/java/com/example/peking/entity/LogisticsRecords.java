@@ -16,6 +16,7 @@ public class LogisticsRecords {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer orderId;
     private String deliveryMan;
     private Date outboundTime;
     private Date signedTime;

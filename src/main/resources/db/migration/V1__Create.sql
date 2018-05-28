@@ -36,6 +36,7 @@ create table OrderInfo
 create table LogisticsRecords
 (
 	id int unsigned auto_increment primary key,
+	orderId int unsigned not null,
 	deliveryMan varchar(16) null,
 	outboundTime datetime null,
 	signedTime datetime null,
