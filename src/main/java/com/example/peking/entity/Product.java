@@ -4,11 +4,9 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,4 +31,8 @@ public class Product {
     private Date createTime;
 
     private Byte status;
+
+    @OneToMany
+    @JoinColumn(name = "productId")
+    private List<OrderInfo> inventory;
 }
