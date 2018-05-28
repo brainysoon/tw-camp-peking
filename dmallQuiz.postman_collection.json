@@ -987,7 +987,7 @@
 		{
 			"id": "86c20165-3b61-4dc3-9dda-949cec074e50",
 			"key": "IP",
-			"value": "localhost",
+			"value": "stage.icusin.com",
 			"type": "string",
 			"description": ""
 		},
