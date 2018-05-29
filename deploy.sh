@@ -13,7 +13,6 @@ cd tw-camp-peking
 git pull origin master
 
 echo start building tw-camp-peking
-cd tw-camp-peking
 
 ./gradlew bootRun
 stage-icusin-remote
