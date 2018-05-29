@@ -4,6 +4,7 @@ import com.example.peking.constant.StatusConstants;
 import com.example.peking.entity.Order;
 import com.example.peking.entity.OrderInfo;
 import com.example.peking.entity.Product;
+import com.example.peking.exception.BusinessException;
 import com.example.peking.repository.LogisticsRecordsRepository;
 import com.example.peking.repository.OrderInfoRepository;
 import com.example.peking.repository.OrderRepository;
@@ -82,7 +83,7 @@ public class OrderServiceImplTest {
         verify(orderInfoRepository).saveAll(any());
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = BusinessException.class)
     public void should_throw_exception_when_the_product_count_is_not_enough() throws Exception {
         List<OrderInfo> orderInfoList = new ArrayList<>();
         OrderInfo orderInfo3 = new OrderInfo();
@@ -120,7 +121,7 @@ public class OrderServiceImplTest {
         assertThat(order).isNull();
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = BusinessException.class)
     public void should_throw_exception_when_the_given_order_is_been_processed() throws Exception {
         Order order = new Order();
         order.setStatus(StatusConstants.ORDER_PURCHASED);
@@ -155,7 +156,7 @@ public class OrderServiceImplTest {
         assertThat(order).isNull();
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = BusinessException.class)
     public void should_throw_exception_when_the_given_withdrawn_order_is_been_processed() throws Exception {
         Order order = new Order();
         order.setStatus(StatusConstants.ORDER_WITHDRAWN);

@@ -4,11 +4,13 @@ import com.example.peking.constant.StatusConstants;
 import com.example.peking.entity.LogisticsRecords;
 import com.example.peking.entity.OrderInfo;
 import com.example.peking.entity.Product;
+import com.example.peking.exception.BusinessException;
 import com.example.peking.repository.LogisticsRecordsRepository;
 import com.example.peking.repository.OrderInfoRepository;
 import com.example.peking.repository.ProductRepository;
 import com.example.peking.service.LogisticsRecordsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +18,9 @@ import java.util.List;
 
 @Service
 public class LogisticsRecordsServiceImpl implements LogisticsRecordsService {
+
+    private static final String PRODUCT_COUNT_NOT_ENOUGH = "product count not enough";
+    private static final String NO_SUCH_PRODUCT = "no such product";
 
     @Autowired
     private LogisticsRecordsRepository logisticsRecordsRepository;
@@ -56,10 +61,11 @@ public class LogisticsRecordsServiceImpl implements LogisticsRecordsService {
 
         List<OrderInfo> orderInfoList = orderInfoRepository.findByOrderId(logisticsRecords.getOrderId());
         for (OrderInfo orderInfo : orderInfoList) {
-            Product product = productRepository.findById(orderInfo.getProductId()).orElseThrow(() -> new Exception("no such product"));
+            Product product = productRepository.findById(orderInfo.getProductId())
+                    .orElseThrow(() -> new BusinessException(NO_SUCH_PRODUCT, HttpStatus.NO_CONTENT));
 
             if (product.getCount() < orderInfo.getPurchaseCount()) {
-                throw new Exception("product count not enough");
+                throw new BusinessException(PRODUCT_COUNT_NOT_ENOUGH, HttpStatus.NOT_ACCEPTABLE);
             }
             product.setCount(product.getCount() - orderInfo.getPurchaseCount());
             productRepository.save(product);

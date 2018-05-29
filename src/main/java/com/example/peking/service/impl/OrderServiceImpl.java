@@ -5,12 +5,14 @@ import com.example.peking.entity.LogisticsRecords;
 import com.example.peking.entity.Order;
 import com.example.peking.entity.OrderInfo;
 import com.example.peking.entity.Product;
+import com.example.peking.exception.BusinessException;
 import com.example.peking.repository.LogisticsRecordsRepository;
 import com.example.peking.repository.OrderInfoRepository;
 import com.example.peking.repository.OrderRepository;
 import com.example.peking.repository.ProductRepository;
 import com.example.peking.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +21,10 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final String ORDER_IS_PROCESSED = "order is processed";
+    private static final String PRODUCT_COUNT_NOT_ENOUGH = "product count not enough";
+    private static final String NO_SUCH_PRODUCT = "no such product";
 
     @Autowired
     private ProductRepository productRepository;
@@ -47,10 +53,10 @@ public class OrderServiceImpl implements OrderService {
         Double totalPrice = 0.0D;
         for (OrderInfo orderInfo : orderInfoList) {
             Product product = productRepository.findById(orderInfo.getProductId())
-                    .orElseThrow(() -> new Exception("no such product"));
+                    .orElseThrow(() -> new BusinessException(NO_SUCH_PRODUCT, HttpStatus.NO_CONTENT));
 
             if (checkLockedCount(orderInfo, product)) {
-                throw new Exception("product count not enough");
+                throw new BusinessException(PRODUCT_COUNT_NOT_ENOUGH, HttpStatus.NOT_ACCEPTABLE);
             }
 
             orderInfo.setCreateTime(new Date());
@@ -89,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
         if (order == null) return null;
 
         if (order.getStatus() > 1) {
-            throw new Exception("order is processed");
+            throw new BusinessException(ORDER_IS_PROCESSED, HttpStatus.CONFLICT);
         }
 
         Date currentTime = new Date();
@@ -113,7 +119,7 @@ public class OrderServiceImpl implements OrderService {
         if (order == null) return null;
 
         if (order.getStatus() > 1) {
-            throw new Exception("order is processed");
+            throw new BusinessException(ORDER_IS_PROCESSED, HttpStatus.CONFLICT);
         }
 
         Date currentTime = new Date();
