@@ -47,7 +47,7 @@ public class ProductRepositoryTest {
 
         product = productRepository.save(product);
 
-        assertThat(product.getId()).isEqualTo(3);
+        assertThat(product.getId()).isEqualTo(5);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ProductRepositoryTest {
 
         List<Product> products = productRepository.findByNameContaining(name);
 
-        assertThat(products.size()).isEqualTo(1);
+        assertThat(products.size()).isEqualTo(3);
     }
 
     @Test
@@ -66,6 +66,6 @@ public class ProductRepositoryTest {
 
         List<Product> products = productRepository.findByNameContainingOrDescriptionContaining(name, desc);
 
-        assertThat(products.size()).isEqualTo(2);
+        assertThat(products.size()).isEqualTo(4);
     }
 }
