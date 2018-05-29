@@ -21,6 +21,7 @@ stage-icusin-remote
 ssh -T -i ./stage_icusin_ubuntu -o StrictHostKeyChecking=no root@stage.icusin.com << stage-icusin-remote
 
 cd /home/tw-camp-peking
+cp build/libs/peking-0.0.1-SNAPSHOT.jar docker/peking.jar
 echo start deploy tw-camp-peking
 
 cd docker
