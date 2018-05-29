@@ -27,5 +27,5 @@ echo start deploy tw-camp-peking
 cd docker
 docker build -t peking .
 docker rm -f peking-instance
-docker run --name peking-instance -d -p 8000:8000 peking
+docker run --name peking-instance --link peking-mysql:mysql -d -p 8000:8000 peking
 stage-icusin-remote
