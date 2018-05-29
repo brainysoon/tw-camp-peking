@@ -3,7 +3,7 @@
 chmod  400 ./stage_icusin_ubuntu
 
 ssh -T -i ./stage_icusin_ubuntu -o StrictHostKeyChecking=no root@stage.icusin.com << stage-icusin-remote
-
+echo start building tw-camp-peking
 cd /home
 if [ ! -d "tw-camp-peking" ];then
     git clone git@github.com:brainysoon/tw-camp-peking.git
@@ -11,8 +11,6 @@ fi
 
 cd tw-camp-peking
 git pull origin master
-
-echo start building tw-camp-peking
 
 ./gradlew bootJar
 stage-icusin-remote
