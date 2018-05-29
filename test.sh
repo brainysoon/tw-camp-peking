@@ -11,6 +11,7 @@ if [ ! -d "tw-camp-peking" ];then
 fi
 
 cd tw-camp-peking
+git pull origin master
 echo running automation test...
 newman run dmallQuiz.postman_collection.json
 stage-icusin-remote
