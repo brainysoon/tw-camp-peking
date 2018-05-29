@@ -23,33 +23,22 @@ public class LogisticsRecordsController {
     HttpEntity<LogisticsRecords> findById(@PathVariable Integer id) {
 
         LogisticsRecords logisticsRecords = logisticsRecordsService.findById(id);
-        if (logisticsRecords == null) {
-            return ResponseEntity.noContent().build();
-        }
-
         return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
     }
 
     @PutMapping(UriConstants.ID + UriConstants.ORDERS + UriConstants.ORDER_ID)
-    HttpEntity<LogisticsRecords> update(@PathVariable Integer id, @RequestParam String logisticsStatus) throws Exception {
+    HttpEntity<LogisticsRecords> update(@PathVariable Integer id, @RequestParam String logisticsStatus) {
 
         if (SHIPPING.equals(logisticsStatus)) {
-
             LogisticsRecords logisticsRecords = logisticsRecordsService.shipping(id);
-            if (logisticsRecords == null) {
-                return ResponseEntity.noContent().build();
-            }
             return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
-        } else if (SIGNED.equals(logisticsStatus)) {
-
-            LogisticsRecords logisticsRecords = logisticsRecordsService.signed(id);
-            if (logisticsRecords == null) {
-                return ResponseEntity.noContent().build();
-            }
-
-            return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
-        } else {
-            return ResponseEntity.badRequest().build();
         }
+
+        if (SIGNED.equals(logisticsStatus)) {
+            LogisticsRecords logisticsRecords = logisticsRecordsService.signed(id);
+            return new ResponseEntity<>(logisticsRecords, HttpStatus.OK);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 }

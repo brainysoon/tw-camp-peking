@@ -112,13 +112,11 @@ public class OrderServiceImplTest {
         orderService.create(orderInfoList);
     }
 
-    @Test
+    @Test(expected = BusinessException.class)
     public void should_return_null_when_the_given_order_is_not_present() throws Exception {
         given(orderRepository.findById(anyInt())).willReturn(Optional.empty());
 
-        Order order = orderService.purchase(1);
-
-        assertThat(order).isNull();
+        orderService.purchase(1);
     }
 
     @Test(expected = BusinessException.class)
@@ -147,13 +145,11 @@ public class OrderServiceImplTest {
         verify(logisticsRecordsRepository).save(any());
     }
 
-    @Test
+    @Test(expected = BusinessException.class)
     public void should_return_null_when_the_given_withdrawn_order_is_not_present() throws Exception {
         given(orderRepository.findById(anyInt())).willReturn(Optional.empty());
 
         Order order = orderService.withdrawn(1);
-
-        assertThat(order).isNull();
     }
 
     @Test(expected = BusinessException.class)
@@ -198,12 +194,10 @@ public class OrderServiceImplTest {
         verify(orderInfoRepository, times(3)).save(any());
     }
 
-    @Test
+    @Test(expected = BusinessException.class)
     public void should_return_null_when_the_given_find_by_id_order_is_not_present() {
         given(orderRepository.findById(anyInt())).willReturn(Optional.empty());
 
-        Order order = orderService.findById(1);
-
-        assertThat(order).isNull();
+        orderService.findById(1);
     }
 }

@@ -25,7 +25,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    HttpEntity<Order> create(@RequestBody List<OrderInfo> orderInfoList) throws Exception {
+    HttpEntity<Order> create(@RequestBody List<OrderInfo> orderInfoList) {
 
         Order order = orderService.create(orderInfoList);
 
@@ -35,37 +35,25 @@ public class OrderController {
     }
 
     @PutMapping(UriConstants.ID)
-    HttpEntity<Order> update(@PathVariable Integer id, @RequestParam String orderStatus) throws Exception {
+    HttpEntity<Order> update(@PathVariable Integer id, @RequestParam String orderStatus) {
 
         if (PAID.equals(orderStatus)) {
-
             Order order = orderService.purchase(id);
-            if (order == null) {
-                return ResponseEntity.noContent().build();
-            }
-
             return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
-        } else if (WITHDRAWN.equals(orderStatus)) {
-
-            Order order = orderService.withdrawn(id);
-            if (order == null) {
-                return ResponseEntity.noContent().build();
-            }
-
-            return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
-        } else {
-            return ResponseEntity.badRequest().build();
         }
+
+        if (WITHDRAWN.equals(orderStatus)) {
+            Order order = orderService.withdrawn(id);
+            return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping(UriConstants.ID)
     HttpEntity<Order> findById(@PathVariable Integer id) {
 
         Order order = orderService.findById(id);
-        if (order == null) {
-            return ResponseEntity.noContent().build();
-        }
-
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
@@ -73,9 +61,8 @@ public class OrderController {
     HttpEntity<List<Order>> findByUserId(@RequestParam Integer userId) {
 
         List<Order> orders = orderService.findByUserId(userId);
-        if (orders.isEmpty()) {
+        if (orders.isEmpty())
             return ResponseEntity.noContent().build();
-        }
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }

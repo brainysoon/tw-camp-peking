@@ -25,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private static final String ORDER_IS_PROCESSED = "order is processed";
     private static final String PRODUCT_COUNT_NOT_ENOUGH = "product count not enough";
     private static final String NO_SUCH_PRODUCT = "no such product";
+    public static final String NO_SUCH_ORDER = "no such order";
 
     @Autowired
     private ProductRepository productRepository;
@@ -40,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order create(List<OrderInfo> orderInfoList) throws Exception {
+    public Order create(List<OrderInfo> orderInfoList) {
         Order order = generateOrder();
         order = orderRepository.save(order);
 
@@ -49,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-    private Double persistenceOrderInfos(List<OrderInfo> orderInfoList, Order order) throws Exception {
+    private Double persistenceOrderInfos(List<OrderInfo> orderInfoList, Order order) {
         Double totalPrice = 0.0D;
         for (OrderInfo orderInfo : orderInfoList) {
             Product product = productRepository.findById(orderInfo.getProductId())
@@ -90,13 +91,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order purchase(Integer id) throws Exception {
-        Order order = orderRepository.findById(id).orElse(null);
-        if (order == null) return null;
+    public Order purchase(Integer id) {
+        Order order = orderRepository.findById(id).orElseThrow(() ->
+                new BusinessException(NO_SUCH_ORDER, HttpStatus.NO_CONTENT));
 
-        if (order.getStatus() > 1) {
+        if (order.getStatus() > 1)
             throw new BusinessException(ORDER_IS_PROCESSED, HttpStatus.CONFLICT);
-        }
+
 
         Date currentTime = new Date();
         order.setStatus(StatusConstants.ORDER_PURCHASED);
@@ -114,13 +115,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order withdrawn(Integer id) throws Exception {
-        Order order = orderRepository.findById(id).orElse(null);
-        if (order == null) return null;
+    public Order withdrawn(Integer id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_ORDER, HttpStatus.NO_CONTENT));
 
-        if (order.getStatus() > 1) {
+        if (order.getStatus() > 1)
             throw new BusinessException(ORDER_IS_PROCESSED, HttpStatus.CONFLICT);
-        }
 
         Date currentTime = new Date();
         order.setStatus(StatusConstants.ORDER_WITHDRAWN);
@@ -140,7 +140,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Integer id) {
-        return orderRepository.findById(id).orElse(null);
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_ORDER, HttpStatus.NO_CONTENT));
     }
 
     @Override

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface OrderService {
 
-    Order create(List<OrderInfo> orderInfoList) throws Exception;
+    Order create(List<OrderInfo> orderInfoList);
 
-    Order purchase(Integer id) throws Exception;
+    Order purchase(Integer id);
 
-    Order withdrawn(Integer id) throws Exception;
+    Order withdrawn(Integer id);
 
     Order findById(Integer id);
 

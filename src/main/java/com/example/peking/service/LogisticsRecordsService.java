@@ -8,5 +8,5 @@ public interface LogisticsRecordsService {
 
     LogisticsRecords shipping(Integer id);
 
-    LogisticsRecords signed(Integer id)throws Exception;
+    LogisticsRecords signed(Integer id);
 }

@@ -21,6 +21,7 @@ public class LogisticsRecordsServiceImpl implements LogisticsRecordsService {
 
     private static final String PRODUCT_COUNT_NOT_ENOUGH = "product count not enough";
     private static final String NO_SUCH_PRODUCT = "no such product";
+    public static final String NO_SUCH_LOGISTICS = "no such logistics";
 
     @Autowired
     private LogisticsRecordsRepository logisticsRecordsRepository;
@@ -33,14 +34,14 @@ public class LogisticsRecordsServiceImpl implements LogisticsRecordsService {
 
     @Override
     public LogisticsRecords findById(Integer id) {
-        return logisticsRecordsRepository.findById(id).orElse(null);
+        return logisticsRecordsRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_LOGISTICS, HttpStatus.NO_CONTENT));
     }
 
     @Override
     public LogisticsRecords shipping(Integer id) {
-        LogisticsRecords logisticsRecords = logisticsRecordsRepository.findById(id).orElse(null);
-        if (logisticsRecords == null) return null;
-
+        LogisticsRecords logisticsRecords = logisticsRecordsRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_LOGISTICS, HttpStatus.NO_CONTENT));
         Date currentTime = new Date();
         logisticsRecords.setModifiedTime(currentTime);
         logisticsRecords.setLogisticsStatus(StatusConstants.LOGISTICS_RECORDS_STATUS_SHIPPING);
@@ -50,9 +51,9 @@ public class LogisticsRecordsServiceImpl implements LogisticsRecordsService {
     }
 
     @Override
-    public LogisticsRecords signed(Integer id) throws Exception {
-        LogisticsRecords logisticsRecords = logisticsRecordsRepository.findById(id).orElse(null);
-        if (logisticsRecords == null) return null;
+    public LogisticsRecords signed(Integer id) {
+        LogisticsRecords logisticsRecords = logisticsRecordsRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_LOGISTICS, HttpStatus.NO_CONTENT));
 
         Date currentTime = new Date();
         logisticsRecords.setModifiedTime(currentTime);

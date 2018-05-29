@@ -3,6 +3,7 @@ package com.example.peking.service;
 import com.example.peking.entity.LogisticsRecords;
 import com.example.peking.entity.OrderInfo;
 import com.example.peking.entity.Product;
+import com.example.peking.exception.BusinessException;
 import com.example.peking.repository.LogisticsRecordsRepository;
 import com.example.peking.repository.OrderInfoRepository;
 import com.example.peking.repository.ProductRepository;
@@ -39,13 +40,11 @@ public class LogisticsRecordsServiceImplTest {
     @InjectMocks
     private LogisticsRecordsServiceImpl logisticsRecordsService = new LogisticsRecordsServiceImpl();
 
-    @Test
+    @Test(expected = BusinessException.class)
     public void should_return_null_when_the_given_logistics_id_is_not_present() {
         given(logisticsRecordsRepository.findById(anyInt())).willReturn(Optional.empty());
 
-        LogisticsRecords logisticsRecords = logisticsRecordsService.shipping(1);
-
-        assertThat(logisticsRecords).isNull();
+        logisticsRecordsService.shipping(1);
     }
 
     @Test
@@ -59,13 +58,11 @@ public class LogisticsRecordsServiceImplTest {
         verify(logisticsRecordsRepository).save(any());
     }
 
-    @Test
+    @Test(expected = BusinessException.class)
     public void should_return_null_when_the_given_signed_logistics_id_is_not_present() throws Exception {
         given(logisticsRecordsRepository.findById(anyInt())).willReturn(Optional.empty());
 
-        LogisticsRecords logisticsRecords = logisticsRecordsService.signed(1);
-
-        assertThat(logisticsRecords).isNull();
+        logisticsRecordsService.signed(1);
     }
 
     @Test
