@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9e670d66-6d32-4b85-9da5-1e52d1f98fd7",
-		"name": "dmallQuiz copy",
+		"_postman_id": "8563be82-b825-45da-9dfb-114aa8f9f395",
+		"name": "dmallQuiz copy copy",
 		"description": "京西商城API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -38,47 +38,26 @@
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"test1\",\n\t\"description\": \"test\",\n\t\"price\": 20\n}"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/products",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"products"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/products",
 						"description": "### API功能：\n- 创建新的商品信息：\n- 同时需要创建对应商品的库存信息\n\n### 输入：\n```\n{\n\t\"name\": \"test1\",\n\t\"description\": \"test\",\n\t\"price\": 20\n}\n```\n### 输出：\n\n- response中的Headers中应该包含对应商品的可访问路径：`location:http://IP:8083/products/10`\n- status状态码为201"
 					},
 					"response": [
 						{
-							"id": "d5cb8a47-28b0-4976-bd64-23f40676502a",
+							"id": "63478ec2-5766-4db9-9893-265fa31c63f1",
 							"name": "创建新商品",
 							"originalRequest": {
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"disabled": false
+										"value": "application/json"
 									}
 								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\n\t\"name\": \"test1\",\n\t\"description\": \"test\",\n\t\"price\": 20\n}"
 								},
-								"url": {
-									"raw": "http://{{IP}}:{{port}}/products",
-									"protocol": "http",
-									"host": [
-										"{{IP}}"
-									],
-									"port": "{{port}}",
-									"path": [
-										"products"
-									]
-								}
+								"url": "http://{{IP}}:{{port}}/products"
 							},
 							"status": "OK",
 							"code": 200,
@@ -162,7 +141,7 @@
 					},
 					"response": [
 						{
-							"id": "32fa616c-2cf8-497e-8d94-81281ec31697",
+							"id": "facc6609-eb51-48cb-a916-ce5794df17fe",
 							"name": "按照name查找商品",
 							"originalRequest": {
 								"method": "GET",
@@ -254,18 +233,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/products/1",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"products",
-								"1"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/products/1",
 						"description": "### API功能：\n- 根据商品id查找商品\n\n### 输入：空\n### 输出：\n```\n{\n    body:{\n        \"id\": 1,\n    \t\"name\": \"test666\",\n    \t\"description\": \"test\",\n    \t\"price\": 1000,\n    \t\"inventory\": {\n        \t\"id\": 1,\n        \t\"count\": 113,\n        \t\"lockedCount\": 107\n    \t}\n\t},\n    \"status\":200\n}\n```"
 					},
 					"response": []
@@ -295,18 +263,7 @@
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"test666\",\n\t\"description\": \"test\",\n\t\"price\": 1000\n}"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/products/122",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"products",
-								"122"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/products/122",
 						"description": "### API功能：\n- 修改对应商品信息\n\n### 输入：\n```\n{\n\t\"name\": \"test666\",\n\t\"description\": \"test\",\n\t\"price\": 1000\n}\n```\n### 输出：\n```\n{\n    \"status\":204\n}\n```"
 					},
 					"response": []
@@ -369,7 +326,7 @@
 					},
 					"response": [
 						{
-							"id": "e24a3d6d-e49b-4ab4-9a00-05919c544aea",
+							"id": "8ca603ce-3615-4c04-92f7-a7bcdc80da3a",
 							"name": "根据name和描述模糊查询",
 							"originalRequest": {
 								"method": "GET",
@@ -461,22 +418,12 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/products",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"products"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/products",
 						"description": "### API功能：\n- 查找所有商品信息\n\n### 输入：空\n### 输出：\n```\n{\n    body:\n    [\n\t    {\n\t        \"id\": 1,\n\t        \"name\": \"test666\",\n\t        \"description\": \"test\",\n\t        \"price\": 1000,\n\t        \"inventory\": {\n\t            \"id\": 1,\n\t            \"count\": 113,\n\t            \"lockedCount\": 107\n\t        }\n\t    },\n\t    {\n\t        \"id\": 2,\n\t        \"name\": \"方便面\",\n\t        \"description\": \"康师傅\",\n\t        \"price\": 5,\n\t        \"inventory\": {\n\t            \"id\": 2,\n\t            \"count\": 100,\n\t            \"lockedCount\": 86\n\t        }\n\t    },\n\t    {\n\t        \"id\": 3,\n\t        \"name\": \"农夫山泉\",\n\t        \"description\": \"矿泉水\",\n\t        \"price\": 3,\n\t        \"inventory\": {\n\t            \"id\": 3,\n\t            \"count\": 100,\n\t            \"lockedCount\": 85\n\t        }\n\t    }\n\t],\n    \"status\":200\n}\n```"
 					},
 					"response": [
 						{
-							"id": "11a8ce34-338c-4d9d-bb67-f75959e72011",
+							"id": "fd090a54-46b5-45d0-a667-a60a80132e28",
 							"name": "查找所有商品",
 							"originalRequest": {
 								"method": "GET",
@@ -485,17 +432,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": {
-									"raw": "http://{{IP}}:{{port}}/products",
-									"protocol": "http",
-									"host": [
-										"{{IP}}"
-									],
-									"port": "{{port}}",
-									"path": [
-										"products"
-									]
-								}
+								"url": "http://{{IP}}:{{port}}/products"
 							},
 							"status": "OK",
 							"code": 200,
@@ -557,17 +494,7 @@
 							"mode": "raw",
 							"raw": "[\n\t{\n\t   \"productId\":1,\n\t   \"purchaseCount\":3\n\t},\t\n\t{\n\t   \"productId\":2,\n\t   \"purchaseCount\":1\n\t},\n\t{\n\t   \"productId\":3,\n\t   \"purchaseCount\":5\n\t}\n]"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/orders",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"orders"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/orders",
 						"description": "### API功能：\n- 创建一条订单信息：\n- 首先需要创建对应商品的货物信息(商品信息快照)\n- 其次在库存信息中锁定对应商品的库存数量\n- 此时订单状态为：unPaid\n\n### 输入：\n```\n[\n\t{\n\t   \"productId\":\"1\",\n\t   \"purchaseCount\":\"3\"\n\t},\t\n\t{\n\t   \"productId\":\"2\",\n\t   \"purchaseCount\":\"1\"\n\t},\n\t{\n\t   \"productId\":\"4\",\n\t   \"purchaseCount\":\"5\"\n\t}\n]\n```\n### 输出：\n```\n{\n    body:{\n    \tid:\"1\",\n    \ttotalPrice:\"230\",\n    \tstatus:\"unPaid\",\n    \tcreateTime:\"2018-4-13\",\n    \tfinishTime:\"\",\n    \tpaidTime:\"\",\n    \twithdrawnTime:\"\"\n    },\n\tstatus：201\n}\n```"
 					},
 					"response": []
@@ -694,18 +621,7 @@
 							"mode": "raw",
 							"raw": "{\n   \"status\":\"finished\"\n}"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/orders/1",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"orders",
-								"1"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/orders/1",
 						"description": "### API:\n- 查看订单id为1的订单信息以及订单中所有商品的信息\n### 输入\n- 空\n### 输出\n```\n{\n    body:{\n\t    id:\"1\",\n\t   totalPrice:\"230\",\n\t   status:\"finished\",\n\t   createTime:\"2018-4-13\",\n\t   finishTime:\"2018-4-20\",\n\t   paidTime:\"2018-4-14\",\n\t   withdrawnTime:\"\",\n\t   products:[\n\t     id:\"1\",\n\t     productName:\"三颗松鼠大礼包\",\n\t     productDescription:\"七种零食包装\",\n\t     purchasePrice:\"60\",\n\t     purchaseCount:\"2\"\n\t   ],\n\t    id:\"2\",\n\t     productName:\"飘柔洗护套装\",\n\t     productDescription:\"滋润秀发\",\n\t     purchasePrice:\"110\",\n\t     purchaseCount:\"1\"\n\t   ]\n   },\n   status:200\n}\n```"
 					},
 					"response": []
@@ -807,18 +723,7 @@
 							"mode": "raw",
 							"raw": "{\n   \"status\":\"finished\"\n}"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/logisticsRecords/1",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"logisticsRecords",
-								"1"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/logisticsRecords/1",
 						"description": "### 根据物流订单Id查看物流详情\n\n### 输入：\n```\n/{id}\n```\n### 输出：\n```\n{\n\tbody:{\n\t\t\"id\":1,\n\t\t\"logisticsStatus\":\"readyToShip\",\n\t\t\"outboundTime\":\"null\",\n\t\t\"signedTime\":\"null\",\n\t\t\"deliveryMan\":\"李师傅\"\n\t},\n\tstatus:200\n}\n```"
 					},
 					"response": []
@@ -844,7 +749,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{IP}}:{{port}}/logisticsRecords/2/orders/1?logisticsStatus=shipping",
+							"raw": "http://{{IP}}:{{port}}/logisticsRecords/122/orders/1?logisticsStatus=shipping",
 							"protocol": "http",
 							"host": [
 								"{{IP}}"
@@ -852,7 +757,7 @@
 							"port": "{{port}}",
 							"path": [
 								"logisticsRecords",
-								"2",
+								"122",
 								"orders",
 								"1"
 							],
@@ -942,18 +847,7 @@
 							"mode": "raw",
 							"raw": "{\n   \"count\": 10\n}"
 						},
-						"url": {
-							"raw": "http://{{IP}}:{{port}}/inventories/111",
-							"protocol": "http",
-							"host": [
-								"{{IP}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"inventories",
-								"111"
-							]
-						},
+						"url": "http://{{IP}}:{{port}}/inventories/111",
 						"description": "### API功能：\n- 修改id为1的商品库存信息\n- 输入代表新增的库存数量\n\n### 输入：\n```\n{\n   \"count\": 10\n}\n```\n### 输出：\n```\n{\n    \"status\":204\n}\n```"
 					},
 					"response": []
@@ -987,7 +881,7 @@
 		{
 			"id": "86c20165-3b61-4dc3-9dda-949cec074e50",
 			"key": "IP",
-			"value": "stage.icusin.com",
+			"value": "localhost",
 			"type": "string",
 			"description": ""
 		},
